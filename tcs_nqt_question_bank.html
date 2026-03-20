@@ -1,49 +1,232 @@
 
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-sans); }
-.wrap { padding: 1rem 0; }
-.header { margin-bottom: 1.5rem; }
-.header h2 { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
-.header p { font-size: 13px; color: var(--color-text-secondary); margin-top: 4px; }
-.controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; align-items: center; }
-.controls select, .controls input { font-size: 13px; padding: 6px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); height: 34px; }
-.controls input { flex: 1; min-width: 160px; }
-.stats { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
-.stat { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 8px 14px; font-size: 12px; color: var(--color-text-secondary); }
-.stat span { font-size: 18px; font-weight: 500; color: var(--color-text-primary); display: block; }
-.qcard { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.1rem 1.25rem; margin-bottom: 12px; }
+:root {
+  --brand-ink: #102320;
+  --brand-muted: #4d6460;
+  --brand-accent: #0d8f7a;
+  --brand-accent-strong: #0a7362;
+  --brand-warm: #ef7a43;
+  --surface-0: #f8fbf9;
+  --surface-1: #ffffff;
+  --surface-2: #edf5f2;
+  --line-soft: #d5e5df;
+  --line-strong: #bad2c9;
+  --shadow-soft: 0 10px 30px rgba(16, 35, 32, 0.08);
+  --radius-md: 12px;
+  --radius-lg: 18px;
+}
+body {
+  font-family: "Manrope", "Segoe UI Variable Text", "Trebuchet MS", sans-serif;
+  color: var(--brand-ink);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(13, 143, 122, 0.17), transparent 28%),
+    radial-gradient(circle at 90% 0%, rgba(239, 122, 67, 0.14), transparent 26%),
+    linear-gradient(180deg, #f4faf7 0%, #f7fbfa 48%, #f3f8f6 100%);
+}
+.wrap {
+  width: min(1120px, 94vw);
+  margin: 0 auto;
+  padding: 1.2rem 0 2rem;
+  animation: riseIn 0.5s ease-out;
+}
+.header {
+  margin-bottom: 1rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(120deg, #ffffff 0%, #f4fbf8 70%);
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-soft);
+}
+.header h2 {
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+.header p {
+  font-size: 14px;
+  color: var(--brand-muted);
+  margin-top: 6px;
+}
+.hero-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.hero-chip {
+  font-size: 12px;
+  color: var(--brand-accent-strong);
+  background: #def4ee;
+  border: 1px solid #b8e6db;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-weight: 700;
+}
+.progress-wrap {
+  background: var(--surface-1);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  margin-bottom: 1rem;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--brand-muted);
+  margin-bottom: 8px;
+}
+.progress-track {
+  height: 10px;
+  border-radius: 999px;
+  background: #deebe6;
+  overflow: hidden;
+}
+.progress-fill {
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-accent) 0%, #18ad95 100%);
+  transition: width 0.25s ease;
+}
+.controls {
+  position: sticky;
+  top: 8px;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+  align-items: center;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-soft);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+}
+.controls select,
+.controls input {
+  font-size: 13px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line-soft);
+  background: var(--surface-1);
+  color: var(--brand-ink);
+  height: 36px;
+}
+.controls input {
+  flex: 1;
+  min-width: 180px;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+.stat {
+  background: var(--surface-1);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-soft);
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--brand-muted);
+}
+.stat span {
+  font-size: 23px;
+  font-weight: 800;
+  color: var(--brand-ink);
+  display: block;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.qcard {
+  background: var(--surface-1);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.qcard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(16, 35, 32, 0.12);
+}
 .qcard.answered-correct { border-left: 3px solid #1D9E75; }
 .qcard.answered-wrong { border-left: 3px solid #D85A30; }
-.qnum { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
-.qtitle { font-size: 14px; color: var(--color-text-primary); line-height: 1.6; margin-bottom: 12px; font-family: var(--font-mono); background: var(--color-background-secondary); padding: 8px 10px; border-radius: 6px; white-space: pre-wrap; }
+.qnum { font-size: 11px; font-weight: 700; color: var(--brand-muted); margin-bottom: 6px; letter-spacing: 0.07em; text-transform: uppercase; }
+.qtitle { font-size: 15px; color: var(--brand-ink); line-height: 1.6; margin-bottom: 12px; font-family: "IBM Plex Mono", "Consolas", monospace; background: var(--surface-2); padding: 9px 11px; border-radius: 9px; white-space: pre-wrap; }
 .qoptions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
-.opt { padding: 7px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); font-size: 13px; cursor: pointer; color: var(--color-text-primary); background: var(--color-background-primary); text-align: left; transition: background 0.15s; }
-.opt:hover { background: var(--color-background-secondary); }
+.opt { padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line-soft); font-size: 13px; cursor: pointer; color: var(--brand-ink); background: #fff; text-align: left; transition: background 0.15s, border-color 0.15s; }
+.opt:hover { background: #f4faf7; border-color: var(--line-strong); }
 .opt.correct { background: #EAF3DE; border-color: #639922; color: #3B6D11; }
 .opt.wrong { background: #FAECE7; border-color: #D85A30; color: #993C1D; }
 .opt.revealed { background: #EAF3DE; border-color: #639922; color: #3B6D11; }
-.explanation { margin-top: 10px; padding: 10px 12px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; display: none; }
+.explanation { margin-top: 10px; padding: 10px 12px; background: var(--surface-2); border-radius: var(--radius-md); font-size: 13px; color: var(--brand-muted); line-height: 1.6; display: none; border: 1px solid var(--line-soft); }
 .explanation.show { display: block; }
-.exhead { font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; font-size: 13px; }
+.exhead { font-weight: 700; color: var(--brand-ink); margin-bottom: 4px; font-size: 13px; }
 .exdetail { margin-bottom: 6px; }
-.exexample { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; padding: 8px 10px; margin-top: 6px; font-family: var(--font-mono); font-size: 12px; white-space: pre-wrap; color: var(--color-text-primary); }
+.exexample { background: var(--surface-1); border: 1px solid var(--line-soft); border-radius: 8px; padding: 8px 10px; margin-top: 6px; font-family: "IBM Plex Mono", "Consolas", monospace; font-size: 12px; white-space: pre-wrap; color: var(--brand-ink); }
 .qactions { display: flex; gap: 6px; margin-top: 8px; }
-.btn { font-size: 12px; padding: 5px 12px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-secondary); cursor: pointer; }
-.btn:hover { background: var(--color-background-secondary); }
-.btn.primary { color: var(--color-text-info); border-color: var(--color-border-info); }
-.section-badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 99px; background: var(--color-background-info); color: var(--color-text-info); margin-bottom: 6px; font-weight: 500; }
+.btn { font-size: 12px; padding: 7px 12px; border-radius: 10px; border: 1px solid var(--line-soft); background: var(--surface-1); color: var(--brand-muted); cursor: pointer; font-weight: 700; }
+.btn:hover { background: #f0faf6; }
+.btn.primary { color: #fff; border-color: var(--brand-accent); background: linear-gradient(90deg, var(--brand-accent) 0%, #18ad95 100%); }
+.section-badge { display: inline-block; font-size: 10px; padding: 3px 8px; border-radius: 99px; background: #def4ee; color: #0a7362; margin-bottom: 6px; font-weight: 700; }
 .pagination { display: flex; gap: 6px; align-items: center; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
-.pagination button { font-size: 12px; padding: 5px 12px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); cursor: pointer; }
-.pagination button.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
-.pagination button:hover:not(.active) { background: var(--color-background-secondary); }
-.empty { text-align: center; padding: 3rem 1rem; color: var(--color-text-secondary); font-size: 14px; }
+.pagination button { font-size: 12px; padding: 7px 12px; border-radius: 10px; border: 1px solid var(--line-soft); background: var(--surface-1); color: var(--brand-ink); cursor: pointer; }
+.pagination button.active { background: var(--brand-accent); color: #fff; border-color: var(--brand-accent); }
+.pagination button:hover:not(.active) { background: #f0faf6; }
+.empty { text-align: center; padding: 3rem 1rem; color: var(--brand-muted); font-size: 14px; }
+.topic-intro { background: linear-gradient(120deg, #ffffff 0%, #f4fbf7 100%); border: 1px solid var(--line-soft); border-radius: var(--radius-lg); padding: 12px 14px; margin: 14px 0 10px; box-shadow: var(--shadow-soft); }
+.topic-intro h3 { font-size: 14px; color: var(--brand-ink); margin-bottom: 8px; }
+.topic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.topic-box { background: var(--surface-1); border: 1px solid var(--line-soft); border-radius: var(--radius-md); padding: 8px 10px; }
+.topic-box h4 { font-size: 12px; color: var(--brand-ink); margin-bottom: 6px; }
+.topic-box ul { margin-left: 16px; }
+.topic-box li { font-size: 12px; color: var(--brand-muted); line-height: 1.5; margin-bottom: 4px; }
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 900px) {
+  .stats { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+}
+@media (max-width: 720px) {
+  .wrap { width: min(1120px, 96vw); }
+  .topic-grid { grid-template-columns: 1fr; }
+  .qoptions { grid-template-columns: 1fr; }
+  .header { padding: 0.9rem 0.95rem; }
+  .controls { top: 4px; }
+  .progress-meta { flex-direction: column; gap: 3px; }
+  .qcard { padding: 0.95rem; }
+}
 </style>
 
 <div class="wrap">
 <div class="header">
   <h2>TCS NQT 2026 — Complete Question Bank</h2>
   <p>310 questions with detailed explanations and real-world examples for every topic</p>
+  <div class="hero-strip">
+    <span class="hero-chip">Smart Practice Mode</span>
+    <span class="hero-chip">Topic Concepts + Formulae Included</span>
+    <span class="hero-chip">Instant Answer Feedback</span>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span id="s-attempted">0 answered</span>
+    <span id="s-accuracy">Accuracy: 0%</span>
+  </div>
+  <div class="progress-track">
+    <div id="s-progress" class="progress-fill"></div>
+  </div>
 </div>
 
 <div class="stats">
@@ -194,6 +377,84 @@ const allQs = [
 ];
 
 const sections = [...new Set(allQs.map(q=>q.sec))];
+const topicMeta = {
+  "Quantitative Aptitude": {
+    concepts: ["Percentages and ratio-proportion", "Time-speed-distance and work-rate", "Profit-loss, average, SI/CI basics"],
+    formulae: ["Percentage = (Part/Whole) x 100", "Speed = Distance/Time", "SI = (P x R x T)/100", "Profit% = ((SP-CP)/CP) x 100"]
+  },
+  "Logical Reasoning": {
+    concepts: ["Syllogisms and set-based conclusions", "Coding-decoding and pattern recognition", "Direction/family relation tracing"],
+    formulae: ["Alphabet position: A=1 ... Z=26", "Clock/day shift: (Target day - Base day) mod 7", "Direction distance: use net horizontal and vertical movement"]
+  },
+  "Verbal Ability": {
+    concepts: ["Grammar rules and sentence correction", "Vocabulary: synonyms, antonyms, idioms", "Voice, preposition and usage rules"],
+    formulae: ["Comparative: adjective + than", "Passive: Object + be + V3 + by + Subject", "Neither/Either generally takes singular verb"]
+  },
+  "Programming Concepts": {
+    concepts: ["Core CS fundamentals and language basics", "Data structures and algorithm complexity", "OOP and problem-solving patterns"],
+    formulae: ["Binary Search: O(log n)", "Quick Sort average: O(n log n)", "Array index access: O(1)", "int range (32-bit signed): -2^31 to 2^31-1"]
+  },
+  "Database Management": {
+    concepts: ["SQL commands and query structure", "Keys, joins, constraints, normalization", "Transactions and indexing"],
+    formulae: ["PRIMARY KEY = UNIQUE + NOT NULL", "ACID: Atomicity, Consistency, Isolation, Durability", "WHERE filters rows, HAVING filters groups"]
+  },
+  "Networking": {
+    concepts: ["OSI/TCP-IP layers and protocol roles", "IP addressing, subnetting, DNS", "Ports and secure communication"],
+    formulae: ["Bandwidth (bps) = data bits / time (s)", "Hosts per subnet = 2^(host bits) - 2", "IPv4 size = 32 bits, IPv6 size = 128 bits"]
+  },
+  "Operating Systems": {
+    concepts: ["Process scheduling and synchronization", "Memory management and virtual memory", "Deadlock, context switch, paging"],
+    formulae: ["CPU Utilization = (Busy time / Total time) x 100", "Waiting Time = Turnaround Time - Burst Time", "Deadlock needs 4 conditions (ME, HW, NP, CW)"]
+  },
+  "Data Structures": {
+    concepts: ["Tree traversals and graph traversal tools", "Linear vs non-linear storage tradeoffs", "Hashing, stability, recursion space"],
+    formulae: ["Linear Search worst case: O(n)", "Balanced tree height: O(log n)", "Skewed tree height: O(n)", "Recursive stack space often O(n)"]
+  },
+  "Algorithms": {
+    concepts: ["Design paradigms: divide-conquer, greedy, DP", "Search/sort strategy selection", "Optimization and state reuse"],
+    formulae: ["Merge Sort: O(n log n)", "Array index access: O(1)", "Binary Search recurrence: T(n)=T(n/2)+O(1)", "Tower of Hanoi moves: 2^n - 1"]
+  },
+  "Computer Fundamentals": {
+    concepts: ["Computer architecture and memory hierarchy", "Number systems and logic gates", "Hardware-software interface"],
+    formulae: ["1 byte = 8 bits", "Data units: KB=1024B, MB=1024KB, GB=1024MB", "CPU cycles/sec measured in Hz"]
+  },
+  "Software Engineering": {
+    concepts: ["SDLC models and lifecycle phases", "Testing strategy and quality control", "Agile methods and collaboration"],
+    formulae: ["Defect Density = defects / KLOC", "Test Coverage (%) = (tested items/total items) x 100", "TDD cycle: Red -> Green -> Refactor"]
+  },
+  "AI & Machine Learning": {
+    concepts: ["AI vs ML scope", "Supervised vs unsupervised learning", "Model training from data"],
+    formulae: ["Linear Regression: y = b0 + b1x", "Accuracy = correct predictions / total predictions", "MSE = (1/n) * sum((y - y_hat)^2)"]
+  },
+  "Puzzles & Brain Teasers": {
+    concepts: ["Pattern spotting and logical elimination", "Rate and counting traps", "Classic number/clock puzzle techniques"],
+    formulae: ["Clock angle = |30H - 5.5M|", "Fibonacci: F(n)=F(n-1)+F(n-2)", "Work-rate: Work = Rate x Time"]
+  },
+  "Technical Concepts": {
+    concepts: ["OOP principles and class design", "Abstraction through interfaces", "Behavior via polymorphism"],
+    formulae: ["Area (circle) = pi r^2", "Area (rectangle) = l x b", "Polymorphism: same method name, different implementation"]
+  },
+  "Advanced Programming": {
+    concepts: ["Recursion and base case thinking", "Complexity and stack behavior", "Function decomposition"],
+    formulae: ["factorial(n) = n * factorial(n-1)", "Base case: factorial(0)=1", "Recursive depth often determines stack usage"]
+  },
+  "Additional Aptitude": {
+    concepts: ["Algebraic manipulation and equations", "Quadratic factorization", "Verification by substitution"],
+    formulae: ["ax^2 + bx + c = 0", "x = (-b +- sqrt(b^2 - 4ac)) / 2a", "(x-r1)(x-r2)=0"]
+  },
+  "More Aptitude Problems": {
+    concepts: ["Simple vs compound interest", "Rate-time-principal linkage", "Equation setup for word problems"],
+    formulae: ["SI = (P x R x T)/100", "A = P(1 + r/100)^t", "CI = A - P"]
+  },
+  "Final Questions": {
+    concepts: ["Number system conversion", "Binary/hex representation", "Positional value interpretation"],
+    formulae: ["Decimal to binary: repeated division by 2", "Decimal to hex: repeated division by 16", "Value = sum(digit x base^position)"]
+  },
+  "Software Engineering Continued": {
+    concepts: ["Quality-first delivery and CI practices", "Automation in build/test pipelines", "Engineering workflow maturity"],
+    formulae: ["Build success rate (%) = successful builds / total builds x 100", "Lead time = commit to deploy duration", "TDD cycle: Red -> Green -> Refactor"]
+  }
+};
 const secFilter = document.getElementById('secFilter');
 sections.forEach(s => {
   const o = document.createElement('option');
@@ -224,21 +485,62 @@ function renderStats() {
   document.getElementById('s-shown').textContent = filtered.length;
   const correct = Object.values(state).filter(v=>v==='correct').length;
   const wrong = Object.values(state).filter(v=>v==='wrong').length;
+  const revealed = Object.values(state).filter(v=>v==='revealed').length;
+  const attempted = correct + wrong;
+  const processed = correct + wrong + revealed;
+  const accuracy = attempted ? Math.round((correct / attempted) * 100) : 0;
+  const progress = Math.round((processed / allQs.length) * 100);
   document.getElementById('s-correct').textContent = correct;
   document.getElementById('s-wrong').textContent = wrong;
+  document.getElementById('s-attempted').textContent = `${attempted} answered | ${revealed} revealed`;
+  document.getElementById('s-accuracy').textContent = `Accuracy: ${accuracy}% | Progress: ${progress}%`;
+  document.getElementById('s-progress').style.width = `${progress}%`;
 }
 
 function renderPage() {
   const start = (currentPage - 1) * perPage;
   const pageQs = filtered.slice(start, start + perPage);
+  const firstQuestionBySection = {};
+  filtered.forEach(q => {
+    if (!firstQuestionBySection[q.sec]) firstQuestionBySection[q.sec] = q.n;
+  });
   const list = document.getElementById('qlist');
   if(pageQs.length === 0) {
     list.innerHTML = '<div class="empty">No questions found. Try a different search.</div>';
     document.getElementById('pagination').innerHTML = '';
     return;
   }
-  list.innerHTML = pageQs.map(q => renderCard(q)).join('');
+  let html = '';
+  pageQs.forEach(q => {
+    if (q.n === firstQuestionBySection[q.sec]) {
+      html += renderTopicIntro(q.sec);
+    }
+    html += renderCard(q);
+  });
+  list.innerHTML = html;
   renderPagination();
+}
+
+function renderTopicIntro(section) {
+  const info = topicMeta[section] || {
+    concepts: ["Core fundamentals and interview-oriented practice points"],
+    formulae: ["Review section-specific rules and key formulas"]
+  };
+  const concepts = info.concepts.map(c => `<li>${c}</li>`).join('');
+  const formulae = info.formulae.map(f => `<li><code>${f}</code></li>`).join('');
+  return `<div class="topic-intro">
+    <h3>${section} - Concepts and Formulae</h3>
+    <div class="topic-grid">
+      <div class="topic-box">
+        <h4>Key Concepts</h4>
+        <ul>${concepts}</ul>
+      </div>
+      <div class="topic-box">
+        <h4>Formulae / Rules</h4>
+        <ul>${formulae}</ul>
+      </div>
+    </div>
+  </div>`;
 }
 
 function renderCard(q) {
@@ -281,7 +583,7 @@ function renderPagination() {
     if(i===1||i===totalPages||Math.abs(i-currentPage)<=2) {
       html += `<button class="${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
     } else if(Math.abs(i-currentPage)===3) {
-      html += `<span style="color:var(--color-text-secondary);padding:0 4px">...</span>`;
+      html += `<span style="color:var(--brand-muted);padding:0 4px">...</span>`;
     }
   }
   if(currentPage < totalPages) html += `<button onclick="goPage(${currentPage+1})">Next →</button>`;
